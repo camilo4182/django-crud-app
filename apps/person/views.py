@@ -4,7 +4,6 @@ from .forms import PersonForm
 
 def homepage(request):
   people = Person.objects.all() # Returns all instances of Person class
-  print(people)
   context = {
     'people': people,
   }
@@ -18,7 +17,6 @@ def add_person(request):
     }
   elif request.method == 'POST':
     form = PersonForm(request.POST)
-    print(form)
     context = {
       'form': form
     }
@@ -28,7 +26,7 @@ def add_person(request):
   return render(request, 'add_person.html', context)
 
 def edit_person(request, id):
-  person = Person.objects.get(id = id)
+  person = Person.objects.get(id = id) # Returns an object based on the id
   if request.method == 'GET':
     form = PersonForm(instance = person)
     context = {
@@ -43,3 +41,8 @@ def edit_person(request, id):
       form.save()
       return redirect('homepage')
   return render(request, 'add_person.html', context)
+
+def delete_person(request, id):
+  person = Person.objects.get(id = id)
+  person.delete()
+  return redirect('homepage')
