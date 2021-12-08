@@ -16,11 +16,21 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from apps.person.views import homepage, add_person, edit_person, delete_person
+from apps.person.class_based_views import PersonList, PersonCreate, PersonUpdate, PersonDelete
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', homepage, name='homepage'),
-    path('add/', add_person, name='add'),
-    path('edit/<int:id>/', edit_person, name='edit'),
-    path('delete/<int:id>/', delete_person, name='delete')
+
+    #""""Function based views urls"""
+
+    #path('', homepage, name='homepage'),
+    #path('add/', add_person, name='add'),
+    #path('edit/<int:id>/', edit_person, name='edit'),
+    #path('delete/<int:id>/', delete_person, name='delete'),
+
+    #"""Class based views urls"""
+    path('', PersonList.as_view(), name = 'homepage'),
+    path('add/', PersonCreate.as_view(), name = 'add'),
+    path('edit/<int:pk>', PersonUpdate.as_view(), name = 'edit'),
+    path('delete/<int:pk>', PersonDelete.as_view(), name = 'delete'),
 ]

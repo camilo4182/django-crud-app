@@ -1,0 +1,6 @@
+<form method="POST">
+  {% csrf_token %}
+  <h1>Would you like to delete {{ object }}?</h1>
+  <button type="submit">Yes</button>
+  <a href="{% url 'homepage' %}">No</a>
+</form>
