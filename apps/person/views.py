@@ -26,3 +26,20 @@ def add_person(request):
       form.save()
       return redirect('homepage')
   return render(request, 'add_person.html', context)
+
+def edit_person(request, id):
+  person = Person.objects.get(id = id)
+  if request.method == 'GET':
+    form = PersonForm(instance = person)
+    context = {
+      'form': form
+    }
+  elif request.method == 'POST':
+    form = PersonForm(request.POST, instance = person)
+    context = {
+      'form': form
+    }
+    if form.is_valid():
+      form.save()
+      return redirect('homepage')
+  return render(request, 'add_person.html', context)
